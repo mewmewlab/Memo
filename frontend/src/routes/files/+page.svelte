@@ -1,9 +1,13 @@
 <script lang="ts">
     let fileInput: HTMLInputElement;
-    import PocketBase, { type RecordModel } from "pocketbase";
-    const pb = new PocketBase("http://127.0.0.1:8090");
+    import { type RecordModel } from "pocketbase";
+    import {pb} from "$lib"
+    import { generateID } from "$lib/api"
 
     async function handleUpload() {
+        // 1. Generate an ID
+        const fileID = await generateID()
+        
         const formData = new FormData();
         if (fileInput.files && fileInput.files[0]) {
             formData.append("documents", fileInput.files[0]);
@@ -19,7 +23,7 @@
     }
 </script>
 
-<div class="w-full flex flex-col gap-4 flex items-center justify-center">
+<div class="w-full flex flex-col gap-4 items-center justify-center">
     <span>Upload Your Temporary Files</span>
     <div class="flex flex-col gap-2">
         <input
