@@ -16,7 +16,7 @@
 		</div>
 	</header>
 	<main
-		class="flex-1 overflow-y-auto p-4 w-2/3 mx-auto flex items-center justify-center"
+		class="flex-1 overflow-y-auto p-4 w-2/3 mx-auto flex justify-center"
 	>
 		{#if children}
 			{@render children()}
