@@ -1,8 +1,9 @@
 import {API_BASE_URL} from "$lib"
 
-import { FileID } from "$lib/api"
+import type { FileID } from "./types"
 
 export const generateID = async () : Promise<FileID> =>  {
     const response = await fetch(`${API_BASE_URL}/-/api/v1/id`) 
-    return response.json()
+    const data = await response.json()
+    return data.id
 }
