@@ -75,11 +75,9 @@
         <Table.Body class="font-light">
             {#each data.files as file}
                 <Table.Row>
-                    <Table.Cell
-                        ><a class="text-pink-500" href={`/files/${file.id}`}
-                            >{file.id}</a
-                        ></Table.Cell
-                    >
+                    <Table.Cell>
+                        {file.id}
+                    </Table.Cell>
                     <Table.Cell>{file.file}</Table.Cell>
                     <Table.Cell>{file.created}</Table.Cell>
                     <Table.Cell>{file.expired}</Table.Cell>

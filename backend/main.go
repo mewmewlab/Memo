@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/miRemid/memo/backend/modules"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
@@ -115,6 +116,9 @@ func main() {
 		},
 		Priority: 999, // execute as latest as possible to allow users to provide their own route
 	})
+
+	// Register JOB
+	modules.RegisterJobs(app)
 
 	if err := app.Start(); err != nil {
 		log.Fatal(err)
