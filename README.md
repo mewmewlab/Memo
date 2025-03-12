@@ -1,3 +1,3 @@
 <!-- https://tailwindcss.com/docs/ -->
 
-\n
+Learning Svelte 5 With Tailwindcss and Pocketbase
