@@ -1,33 +1,25 @@
-FROM golang:1.23.6-alpine3.21 AS backend-builder
-
-WORKDIR /app
-
-COPY ./backend/ .
-
-RUN GOPROXY=https://goproxy.cn,direct go mod download&& \
-    go build -o memo main.go
-
+# 前端构建阶段
 FROM node:hydrogen-alpine3.21 AS frontend-builder
-
 WORKDIR /app
+COPY ui/package.json ui/pnpm-lock.yaml ./
+RUN corepack enable && \
+    pnpm install --frozen-lockfile
+COPY ui/ .
+RUN pnpm build
 
-COPY ./frontend/package.json .
+# Go编译阶段
+FROM golang:1.23.6-alpine3.21 AS go-builder
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
+COPY backend/ ./backend
+RUN GOPROXY=https://goproxy.cn CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /memo-backend ./backend/main.go
 
-RUN npm config set registry http://mirrors.tencent.com/npm/ && npm install
-
-COPY ./frontend/ .
-
-RUN npm run build
-
+# 最终镜像
 FROM alpine:3.21.3
-
+RUN apk add --no-cache ca-certificates
 WORKDIR /app
-
-COPY --from=backend-builder /app/memo .
-
-COPY --from=frontend-builder /app/dist ./pb_public
-
+COPY --from=go-builder /memo-backend /app/
+COPY --from=frontend-builder /app/build /app/pb_public
 EXPOSE 8080
-
-CMD ["./memo"]
-
+CMD ["/app/memo-backend", "serve", "--http=0.0.0.0:8080"]
