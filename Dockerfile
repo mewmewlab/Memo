@@ -13,7 +13,7 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY backend/ ./backend
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /memo-backend ./backend/main.go
+RUN GOPROXY=https://ghproxy.cn CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /memo-backend ./backend/main.go
 
 # 最终镜像
 FROM alpine:3.21.3

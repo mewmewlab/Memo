@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	_ "github.com/miRemid/memo/backend/migrations"
 	"github.com/miRemid/memo/backend/modules"
-	_ "github.com/miRemid/memo/migrations"
 
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
