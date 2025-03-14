@@ -15,7 +15,7 @@ const (
 func RegisterJobs(app *pocketbase.PocketBase) {
 
 	// Delete out-dated files in 7 days
-	app.Cron().MustAdd(JOB_CLEAN_OUTDATE_FILES, "* * */1 * *", func() {
+	app.Cron().MustAdd(JOB_CLEAN_OUTDATE_FILES, "0 1 * * *", func() {
 		files := make([]models.Files, 0)
 		app.Logger().Info(fmt.Sprintf("JOB: '%s' START", JOB_CLEAN_OUTDATE_FILES))
 		defer func() {
