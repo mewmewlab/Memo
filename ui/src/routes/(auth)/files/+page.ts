@@ -1,8 +1,13 @@
 import type { PageLoad } from "./$types";
-import { pb } from "$lib";
+import { pb, user } from "$lib";
+import { get } from "svelte/store"
 
 export const load: PageLoad = async ({ fetch }) => {
-    const files = await pb.collection("files").getFullList({ fetch });
+    const userRecord = get(user) 
+    const files = await pb.collection("files").getFullList({ 
+        fetch: fetch, 
+        filter: `userID=${userRecord!.id}`
+    });
     const reversedFiles = files.reverse().map((file) => {
         const expired = new Date(file.created);
         expired.setDate(expired.getDate() + 7);

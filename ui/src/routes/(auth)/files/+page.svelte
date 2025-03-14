@@ -5,6 +5,7 @@
     import * as Table from "$lib/components/ui/table";
     import { Toaster, toast } from "svelte-sonner";
     import { invalidateAll } from "$app/navigation";
+    import {get} from "svelte/store"
 
     let isOpen = $state(false);
 
@@ -12,12 +13,14 @@
 
     let fileInput: HTMLInputElement;
     import { type RecordModel } from "pocketbase";
-    import { pb } from "$lib";
+    import { pb, user } from "$lib";
 
     async function handleUpload() {
         const formData = new FormData();
+        const userRecord = get(user)
         if (fileInput.files && fileInput.files[0]) {
             formData.append("file", fileInput.files[0]);
+            formData.append("userID", userRecord!.id)
             try {
                 const createRecord: RecordModel = await pb
                     .collection("files")

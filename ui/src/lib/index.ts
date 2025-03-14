@@ -1,6 +1,7 @@
 // place files you want to import through the `$lib` alias in this folder.
-import PocketBase from "pocketbase"
+import PocketBase, { type AuthRecord } from "pocketbase"
 import { browser } from "$app/environment"
+import { writable } from "svelte/store";
 
 let API_BASE_URL = ""
 if (browser) {
@@ -12,4 +13,9 @@ if (browser) {
 
 const pb = new PocketBase(API_BASE_URL)
 
-export { pb, API_BASE_URL }
+const user = writable<AuthRecord>(null)
+pb.authStore.onChange((_, authRecord) => {
+	user.set(authRecord);
+}, true);
+
+export { pb, API_BASE_URL, user }
