@@ -1,12 +1,12 @@
 import type { PageLoad } from "./$types";
-import { pb, user } from "$lib";
+import { pb, user } from "$lib/stores/pocketbase";
 import { get } from "svelte/store"
 
 export const load: PageLoad = async ({ fetch }) => {
     const userRecord = get(user) 
     const files = await pb.collection("files").getFullList({ 
         fetch: fetch, 
-        filter: `userID=${userRecord!.id}`
+        filter: `userID="${userRecord!.id}"` // 修复：确保userID值用引号包裹
     });
     const reversedFiles = files.reverse().map((file) => {
         const expired = new Date(file.created);

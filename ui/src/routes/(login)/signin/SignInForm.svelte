@@ -1,7 +1,7 @@
 <script lang="ts">
   import { applyAction } from "$app/forms";
   import { ClientResponseError } from "pocketbase";
-  import { pb } from "$lib";
+  import { pb } from "$lib/stores/pocketbase";
   import * as Form from "$lib/components/ui/form/index.js";
   import { Input } from "$lib/components/ui/input/index.js";
   import { formSchema, type FormSchema } from "./schema";

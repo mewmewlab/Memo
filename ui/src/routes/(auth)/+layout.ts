@@ -1,18 +1,23 @@
 import { redirect } from '@sveltejs/kit';
-import { ClientResponseError } from 'pocketbase';
 
-import { pb } from '$lib';
+import { pb, user } from '$lib/stores/pocketbase';
 
 import type { LayoutLoad } from './$types';
+import { get } from 'svelte/store';
 
 export const load: LayoutLoad = async ({ url, fetch }) => {
-	try {
-		await pb.collection('users').authRefresh({ fetch });
-	} catch (e) {
-		if (!(e instanceof ClientResponseError)) {
-			throw e;
+	const currentUser = get(user)
+	if (!currentUser) {
+		try {
+			if (!pb.authStore.record?.id) {
+				throw new Error("No user ID found in auth store")
+			}
+			const userData = await pb.collection("users").getOne(pb.authStore.record.id, {
+				fetch: fetch,
+			})
+			user.set(userData)
+		} catch(e) {
+			throw redirect(303, "/signin")
 		}
-		pb.authStore.clear();
-		throw redirect(302, `/signin`);
 	}
 };

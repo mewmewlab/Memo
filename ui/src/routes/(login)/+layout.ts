@@ -4,7 +4,7 @@ import { get } from "svelte/store";
 import { redirect } from "@sveltejs/kit";
 import type { LayoutLoad } from "./$types";
 
-import { user } from "$lib";
+import { user } from "$lib/stores/pocketbase";
 
 export const load: LayoutLoad = async ({url}) => {
     if (get(user) !== null) {
