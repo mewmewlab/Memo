@@ -7,7 +7,9 @@ import (
 	"path/filepath"
 	"strings"
 
+	_ "github.com/miRemid/memo/backend/migrations"
 	"github.com/miRemid/memo/backend/modules"
+
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
@@ -96,9 +98,8 @@ func main() {
 
 	// migrate command (with js templates)
 	migratecmd.MustRegister(app, app.RootCmd, migratecmd.Config{
-		TemplateLang: migratecmd.TemplateLangJS,
-		Automigrate:  automigrate,
-		Dir:          migrationsDir,
+		Automigrate: automigrate,
+		Dir:         migrationsDir,
 	})
 
 	// GitHub selfupdate
