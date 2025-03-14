@@ -107,9 +107,8 @@ func main() {
 
 	// migrate command (with js templates)
 	migratecmd.MustRegister(app, app.RootCmd, migratecmd.Config{
-		TemplateLang: migratecmd.TemplateLangJS,
-		Automigrate:  automigrate,
-		Dir:          migrationsDir,
+		Automigrate: automigrate,
+		Dir:         migrationsDir,
 	})
 
 	// GitHub selfupdate

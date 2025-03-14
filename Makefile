@@ -5,7 +5,7 @@ build-backend:
 	go build backend/main.go -o memo
 
 run-backend:
-	go run backend/*.go serve
+	cd backend && go run main.go serve
 
 run-frontend:
-	cd frontend && pnpm run dev
+	cd ui && pnpm run dev

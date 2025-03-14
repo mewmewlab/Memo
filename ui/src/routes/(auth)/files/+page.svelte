@@ -12,12 +12,13 @@
 
     let fileInput: HTMLInputElement;
     import { type RecordModel } from "pocketbase";
-    import { pb } from "$lib";
+    import { pb, user } from "$lib/stores/pocketbase";
 
     async function handleUpload() {
         const formData = new FormData();
         if (fileInput.files && fileInput.files[0]) {
             formData.append("file", fileInput.files[0]);
+            formData.append("userID", $user!.id)
             try {
                 const createRecord: RecordModel = await pb
                     .collection("files")

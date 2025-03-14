@@ -1,5 +1,4 @@
 // place files you want to import through the `$lib` alias in this folder.
-import PocketBase from "pocketbase"
 import { browser } from "$app/environment"
 
 let API_BASE_URL = ""
@@ -10,6 +9,5 @@ if (browser) {
     }
 }
 
-const pb = new PocketBase(API_BASE_URL)
 
-export { pb, API_BASE_URL }
+export { API_BASE_URL}
