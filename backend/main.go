@@ -9,6 +9,7 @@ import (
 
 	_ "github.com/miRemid/memo/backend/migrations"
 	"github.com/miRemid/memo/backend/modules"
+	"github.com/miRemid/memo/ui"
 
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
@@ -119,7 +120,8 @@ func main() {
 	app.OnServe().Bind(&hook.Handler[*core.ServeEvent]{
 		Func: func(e *core.ServeEvent) error {
 			if !e.Router.HasRoute(http.MethodGet, "/{path...}") {
-				e.Router.GET("/{path...}", apis.Static(os.DirFS(publicDir), indexFallback))
+
+				e.Router.GET("/{path...}", apis.Static(ui.DistDirFS, indexFallback))
 			}
 
 			return e.Next()
