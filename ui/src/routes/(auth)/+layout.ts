@@ -17,7 +17,9 @@ export const load: LayoutLoad = async ({ url, fetch }) => {
 			})
 			user.set(userData)
 		} catch(e) {
-			throw redirect(303, "/signin")
+			redirect(303, "/signin?next=" + encodeURIComponent(url.pathname))
 		}
+	} else {
+		console.log(currentUser)
 	}
 };
