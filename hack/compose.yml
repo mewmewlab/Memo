@@ -1,0 +1,8 @@
+services:
+  memo:
+    container_name: memo
+    image: "ghcr.io/mewmewlab/memo:${MEMO_VERSION:-main}"
+    ports:
+      - 8080:8080
+    volumes:
+      - ./pb_data:/app/pb_data
