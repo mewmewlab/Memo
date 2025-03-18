@@ -1,0 +1,36 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: memo
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: memo # has to match .spec.template.metadata.labels
+  serviceName: "memo"
+  template:
+    metadata:
+      labels:
+        app: memo # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: memo
+        image: ghcr.io/mewmewlab/memo:main
+        ports:
+        - containerPort: 8080
+          name: memo
+        volumeMounts:
+        - name: memo-sqlite3-volume
+          mountPath: /app/pb_data
+  volumeClaimTemplates:
+  - metadata:
+      name: memo-sqlite3-volume
+    spec:
+      storageClassName: standard
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
