@@ -1,0 +1,16 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: memo
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: memo # has to match .spec.template.metadata.labels
+  serviceName: "memo"
+  template:
+    metadata:
+      labels:
+        app: memo # has to match .spec.selector.matchLabels

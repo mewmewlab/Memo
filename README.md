@@ -8,20 +8,26 @@ Learning Svelte 5 With Tailwindcss and Pocketbase
 git clone https://github.com/mewmewlab/memo
 ```
 
-- 1. Docker compose
+1. Docker compose
 ```shell
 cd hack
 docker compose up -d
 ```
 
-- 2. Kubectl
+2. Kubectl
 ```shell
 cd hack/k8s
 kubectl apply -f .
 ```
 
-- 3. Helm
+3. Helm
 ```shell
 cd hack/k8s/helm
 helm install memo .
+```
+
+4. Kustomize
+```shell
+cd hack/k8s/kubestomize
+kubectl apply -k overlays/production # 3 pods, 30001 nodeport
 ```
